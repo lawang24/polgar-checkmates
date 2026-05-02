@@ -1,0 +1,18 @@
+SPDX-License-Identifier: GPL-3.0-or-later
+
+This standalone project is distributed under the GNU General Public License
+version 3 or, at your option, any later version, except where noted below.
+
+Attribution and provenance:
+
+This project is derived from Daniel Moore's "4462 Chess Problems" repository:
+https://github.com/denialromeo/4462-chess-problems
+
+The derived material includes the original browser puzzle-player concept and
+the `problems.json` puzzle dataset. The upstream repository did not include a
+repository-level license file when this notice was added. Keep this attribution
+with redistributions of this project and verify rights for any release context
+where the upstream licensing status matters.
+
+Third-party dependencies are licensed separately. See THIRD_PARTY_NOTICES.md
+and package-lock.json for dependency license metadata.

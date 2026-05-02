@@ -1,26 +1,18 @@
 {
   "name": "chess-puzzle-player",
   "version": "1.0.0",
-  "description": "Improve your game!",
+  "description": "Standalone browser player for the 4,462 Polgar checkmate puzzles.",
   "scripts": {
     "start": "vite --host 127.0.0.1 --port 5174 --strictPort",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/denialromeo/3412-chess-problems.git"
-  },
-  "author": "Daniel Moore",
   "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/denialromeo/3412-chess-problems/issues"
-  },
-  "homepage": "https://github.com/denialromeo/3412-chess-problems#readme",
   "dependencies": {
     "@lichess-org/chessground": "^10.1.1",
-    "chess.js": "^0.10.2",
-    "vite": "^7.1.12"
+    "chess.js": "^0.10.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "vite": "^7.1.12"
+  }
 }

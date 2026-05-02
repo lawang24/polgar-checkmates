@@ -1,12 +1,10 @@
-## 4462 Chess Problems
+## Chess Puzzle Player
 
-In 1994, famed chess teacher [László Polgár](https://en.wikipedia.org/wiki/L%C3%A1szl%C3%B3_Polg%C3%A1r) published [*Chess: 5,334 Problems, Combinations, and Games*](https://ausee.files.wordpress.com/2016/06/23.pdf).
+A simple way to practice the 4,462 checkmate problems from Polgár's [*Chess: 5,334 Problems, Combinations, and Games*](https://ausee.files.wordpress.com/2016/06/23.pdf).
 
-Of these, 4,462 are checkmate problems. You can play through them [here](http://danielmoore.us/chess-puzzles).
+### Run Locally
 
-If you'd like to use these problems for your own project, simply download [problems.json](https://raw.githubusercontent.com/denialromeo/4462-chess-problems/master/problems.json). Enjoy!
-
-To run this locally, install dependencies and start the Vite dev server.
+Install dependencies and start the Vite dev server.
 
 ```
 npm install
@@ -15,16 +13,10 @@ npm start
 
 Then open the local URL printed by Vite.
 
-### Possible Errors in Book
+### Attribution and Acknowledgements
 
-* Problem [1071](http://danielmoore.us/chess-puzzles?id=1071) seems to be mate-in-one (Nc7). I've re-labeled it from mate-in-two to mate-in-one.
-* Problem [1325](http://danielmoore.us/chess-puzzles?id=1325) seems to have two light-square white bishops. This error isn't present in the 1994 edition.
-* Problem [4362](http://danielmoore.us/chess-puzzles?id=4362) seems to be mate-in-two. I've re-labeled it from mate-in-three to mate-in-two.
-
-### Acknowledgments
+This standalone app is derived from Daniel Moore's [denialromeo/4462-chess-problems](https://github.com/denialromeo/4462-chess-problems), including the original `problems.json` puzzle dataset and the original web-player concept.
 
 Special thanks to the [lichess-org/chessground](https://github.com/lichess-org/chessground) contributors and to Jeff Hlywa for [chess.js](https://github.com/jhlywa/chess.js#readme).
 
-Special thanks as well to Christian Kuhn, from whose website I originally procured the source PGN.
-
-And finally, much thanks to the authors of [Stockfish](https://github.com/official-stockfish/Stockfish#readme) and [python-chess](https://python-chess.readthedocs.io/en/latest/index.html).
+Thanks also to Christian Kuhn, whose site supplied the source PGN used by the upstream project, and to the [Stockfish](https://github.com/official-stockfish/Stockfish#readme) and [python-chess](https://python-chess.readthedocs.io/en/latest/index.html) projects used in its puzzle preparation workflow.
