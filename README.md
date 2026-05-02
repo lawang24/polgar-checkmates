@@ -2,6 +2,9 @@
 
 A simple way to practice the 4,462 checkmate problems from Polgár's [*Chess: 5,334 Problems, Combinations, and Games*](https://ausee.files.wordpress.com/2016/06/23.pdf).
 
+<img width="1915" height="959" alt="Screenshot 2026-05-02 at 11 38 08 AM" src="https://github.com/user-attachments/assets/ed164f1c-acb7-49d4-aa00-1c60ad9b8884" />
+
+
 ### Run Locally
 
 Install dependencies and start the Vite dev server.
