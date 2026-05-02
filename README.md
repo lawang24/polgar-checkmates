@@ -6,12 +6,14 @@ Of these, 4,462 are checkmate problems. You can play through them [here](http://
 
 If you'd like to use these problems for your own project, simply download [problems.json](https://raw.githubusercontent.com/denialromeo/4462-chess-problems/master/problems.json). Enjoy!
 
-To run this locally, run the below and then open `index.html` in your browser.
+To run this locally, install dependencies and start the Vite dev server.
 
 ```
 npm install
 npm start
 ```
+
+Then open the local URL printed by Vite.
 
 ### Possible Errors in Book
 
@@ -21,8 +23,8 @@ npm start
 
 ### Acknowledgments
 
-Special thanks to Chris Oakman for his exquisitely documented 2013 [chessboard.js](https://github.com/oakmac/chessboardjs/#readme) and to Jeff Hlywa for [chess.js](https://github.com/jhlywa/chess.js#readme).
+Special thanks to the [lichess-org/chessground](https://github.com/lichess-org/chessground) contributors and to Jeff Hlywa for [chess.js](https://github.com/jhlywa/chess.js#readme).
 
-Special thanks as well to Christian Kuhn, from whose website I procured polgar.pgn (http://www.qno.de/schach/polgar.zip).
+Special thanks as well to Christian Kuhn, from whose website I originally procured the source PGN.
 
 And finally, much thanks to the authors of [Stockfish](https://github.com/official-stockfish/Stockfish#readme) and [python-chess](https://python-chess.readthedocs.io/en/latest/index.html).

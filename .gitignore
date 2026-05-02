@@ -1,6 +1,7 @@
 *~
 dist/
 stockfish.exe
+polgar.pgn
 
 ### node
 
@@ -65,5 +66,4 @@ typings/
 
 # next.js build output
 .next
-
 

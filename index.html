@@ -2,21 +2,52 @@
 <html>
     <head>
         <title>Chess Puzzle Player</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
-        <center>
-        <h2 id="problem-title" style="font-family:Helvetica"></h2>
-        <div id="board" style="width:436px;height:0;padding-bottom:436px"></div>
-        <br>
-        <input type="button" id="hint-btn" value="Hint" />
-        <input type="button" id="next-btn" style="display:none" value="Next" />
-        </center>
-        <center>
-        <p style="font-family:Helvetica">
-            Above is problem <span id="problem-num"></span> from Polgár's book. <a id="problem-link" target="_self">Here</a> is a link to return to it in the future.
-        </p>
-        </center>
+        <div id="help-widget">
+            <button
+                id="help-toggle"
+                type="button"
+                aria-label="Show controls help"
+                aria-expanded="false"
+                aria-controls="help-panel"
+            >
+                ?
+            </button>
+            <section id="help-panel" role="dialog" aria-labelledby="help-title" hidden>
+                <h2 id="help-title">Controls</h2>
+                <ul>
+                    <li><kbd>H</kbd><span>Shows a hint for the next move.</span></li>
+                    <li><kbd>Right Arrow</kbd><span>Goes to the next puzzle.</span></li>
+                    <li><kbd>Left Arrow</kbd><span>Goes to the previous puzzle in ordered mode.</span></li>
+                    <li><kbd>Space</kbd><span>Goes next only after the puzzle is solved.</span></li>
+                </ul>
+            </section>
+        </div>
 
-        <script src="dist/chess-puzzle-player.js"></script>
+        <main id="app">
+            <aside id="problem-browser" aria-label="Puzzle browser">
+                <div id="browser-title">
+                    <span id="browser-title-text">Puzzles</span>
+                    <button
+                        id="sidebar-toggle"
+                        type="button"
+                        aria-label="Collapse puzzle sidebar"
+                        aria-expanded="true"
+                        aria-controls="browser-list"
+                        title="Collapse puzzle sidebar"
+                        data-direction="collapse"
+                    ></button>
+                </div>
+                <div id="browser-list"></div>
+            </aside>
+            <div id="board-shell">
+                <div id="board"></div>
+                <button id="next-btn" type="button" hidden>Next</button>
+            </div>
+        </main>
+
+        <script type="module" src="/index.js"></script>
     </body>
 </html>

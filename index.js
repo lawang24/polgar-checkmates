@@ -1,7 +1,8 @@
-require("babel-polyfill")
+import "@lichess-org/chessground/assets/chessground.base.css";
+import "@lichess-org/chessground/assets/chessground.brown.css";
+import "@lichess-org/chessground/assets/chessground.cburnett.css";
+import "./styles.css";
 
-require("!style-loader!css-loader!./chessboard/chessboard.css")
+import { init } from "./display.js";
 
-const { init } = require("./display.js")
-
-init()
+init();

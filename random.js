@@ -6,7 +6,4 @@ function choice(array) {
     return array[random(array.length)];
 }
 
-// Exports
-module.exports = {
-    choice,
-};
+export { choice };

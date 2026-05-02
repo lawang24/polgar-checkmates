@@ -1,0 +1,420 @@
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #181818;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  overflow: hidden;
+}
+
+#help-widget {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+}
+
+#help-toggle {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.88);
+  color: #fff;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.26);
+}
+
+#help-toggle:hover,
+#help-toggle[aria-expanded="true"],
+#help-toggle:focus-visible {
+  background: rgba(0, 0, 0, 0.94);
+  outline: 2px solid rgba(255, 255, 255, 0.75);
+  outline-offset: 2px;
+}
+
+#help-panel {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  box-sizing: border-box;
+  width: min(292px, calc(100vw - 32px));
+  max-height: calc(100vh - 72px);
+  max-height: calc(100dvh - 72px);
+  overflow: auto;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: #242424;
+  color: #f4f4f4;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42);
+}
+
+#help-panel[hidden] {
+  display: none;
+}
+
+#help-title {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+#help-panel ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#help-panel li {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+  color: #e8e8e8;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+#help-panel kbd {
+  justify-self: start;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 3px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  background: #333;
+  color: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(248px, 320px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+}
+
+#app.sidebar-collapsed {
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 12px;
+}
+
+#problem-browser {
+  align-self: stretch;
+  min-height: 0;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #222;
+  color: #f4f4f4;
+}
+
+#browser-title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 14px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: #222;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#browser-title-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: #303030;
+  color: #f4f4f4;
+  font: inherit;
+  cursor: pointer;
+}
+
+#sidebar-toggle::before {
+  content: "‹";
+  display: block;
+  transform: translateY(-1px);
+  font-size: 24px;
+  font-weight: 650;
+  line-height: 1;
+}
+
+#sidebar-toggle[data-direction="expand"]::before {
+  content: "›";
+}
+
+#sidebar-toggle:hover,
+#sidebar-toggle:focus-visible {
+  background: #3d3d3d;
+  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline-offset: 1px;
+}
+
+#app.sidebar-collapsed #problem-browser {
+  overflow: hidden;
+  border-color: transparent;
+  background: transparent;
+}
+
+#app.sidebar-collapsed #browser-title {
+  justify-content: center;
+  padding: 8px 6px;
+  border-bottom: 0;
+  background: transparent;
+}
+
+#app.sidebar-collapsed #browser-title-text {
+  display: none;
+}
+
+#app.sidebar-collapsed #sidebar-toggle {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: transparent;
+}
+
+#app.sidebar-collapsed #sidebar-toggle:hover,
+#app.sidebar-collapsed #sidebar-toggle:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#browser-list {
+  padding: 12px;
+}
+
+.browser-section + .browser-section {
+  margin-top: 16px;
+}
+
+.browser-heading {
+  margin: 0 0 8px;
+  color: #cfcfcf;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 4px;
+}
+
+.problem-link {
+  min-width: 0;
+  height: 28px;
+  border: 0;
+  border-radius: 4px;
+  background: #303030;
+  color: #e8e8e8;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.problem-link:hover,
+.problem-link:focus-visible {
+  background: #3d3d3d;
+  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline-offset: 1px;
+}
+
+.problem-link.solved {
+  background: #28543b;
+  color: #effff5;
+  box-shadow: inset 0 -3px 0 #65c984;
+}
+
+.problem-link.solved:hover,
+.problem-link.solved:focus-visible {
+  background: #326448;
+}
+
+.problem-link.active {
+  background: #d5b06a;
+  color: #171717;
+  font-weight: 750;
+}
+
+#board-shell {
+  position: relative;
+  justify-self: center;
+  width: min(calc(100vw - 384px), calc(100vh - 32px), 760px);
+  width: min(calc(100vw - 384px), calc(100dvh - 32px), 760px);
+  height: min(calc(100vw - 384px), calc(100vh - 32px), 760px);
+  height: min(calc(100vw - 384px), calc(100dvh - 32px), 760px);
+}
+
+#app.sidebar-collapsed #board-shell {
+  width: min(calc(100vw - 88px), calc(100vh - 32px), 760px);
+  width: min(calc(100vw - 88px), calc(100dvh - 32px), 760px);
+  height: min(calc(100vw - 88px), calc(100vh - 32px), 760px);
+  height: min(calc(100vw - 88px), calc(100dvh - 32px), 760px);
+}
+
+#board {
+  width: 100%;
+  height: 100%;
+}
+
+#promotion-choice {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#promotion-choice square {
+  position: absolute;
+  width: 12.5%;
+  height: 12.5%;
+  border-radius: 50%;
+  background-color: #b0b0b0;
+  box-shadow: inset 0 0 25px 3px #808080;
+  cursor: pointer;
+  pointer-events: all;
+  transition:
+    border-radius 150ms ease,
+    box-shadow 150ms ease;
+}
+
+#promotion-choice square:hover,
+#promotion-choice square:focus-visible {
+  border-radius: 0;
+  box-shadow: inset 0 0 48px 8px #629924;
+  outline: 0;
+}
+
+#promotion-choice piece {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  opacity: 1;
+  pointer-events: none;
+  transform: scale(0.8);
+  transition: transform 150ms ease;
+}
+
+#promotion-choice square:hover piece,
+#promotion-choice square:focus-visible piece {
+  transform: none;
+}
+
+#next-btn {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 5;
+  min-width: 72px;
+  min-height: 40px;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(20, 20, 20, 0.86);
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 650;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+#next-btn:hover,
+#next-btn:focus-visible {
+  background: rgba(0, 0, 0, 0.94);
+  outline: 2px solid rgba(255, 255, 255, 0.75);
+  outline-offset: 2px;
+}
+
+@media (max-width: 880px) {
+  body {
+    overflow: auto;
+  }
+
+  #app {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    align-items: start;
+  }
+
+  #app.sidebar-collapsed {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+  }
+
+  #board-shell {
+    grid-row: 1;
+    width: min(calc(100vw - 32px), 760px);
+    height: min(calc(100vw - 32px), 760px);
+  }
+
+  #app.sidebar-collapsed #board-shell {
+    width: min(calc(100vw - 32px), 760px);
+    height: min(calc(100vw - 32px), 760px);
+  }
+
+  #problem-browser {
+    grid-row: 2;
+    width: min(calc(100vw - 32px), 760px);
+    justify-self: center;
+    max-height: 42vh;
+  }
+
+  #app.sidebar-collapsed #problem-browser {
+    max-height: 44px;
+  }
+}
+
+@media (max-width: 420px) {
+  #help-widget {
+    top: 10px;
+    right: 10px;
+  }
+
+  #help-panel {
+    top: 38px;
+    width: calc(100vw - 20px);
+  }
+
+  #help-panel li {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+}

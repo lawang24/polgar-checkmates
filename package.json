@@ -3,32 +3,24 @@
   "version": "1.0.0",
   "description": "Improve your game!",
   "scripts": {
-    "start": "webpack"
+    "start": "vite --host 127.0.0.1 --port 5174 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/denialromeo/3412-chess-problems.git"
   },
   "author": "Daniel Moore",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/denialromeo/3412-chess-problems/issues"
   },
   "homepage": "https://github.com/denialromeo/3412-chess-problems#readme",
   "dependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
+    "@lichess-org/chessground": "^10.1.1",
     "chess.js": "^0.10.2",
-    "jquery": "^3.3.1",
-    "urijs": "^1.19.1",
-    "webpack": "^4.16.5"
+    "vite": "^7.1.12"
   },
-  "devDependencies": {
-    "css-loader": "^1.0.0",
-    "style-loader": "^0.23.1",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.10"
-  }
+  "devDependencies": {}
 }
