@@ -102,6 +102,7 @@ body {
 
 #mobile-browser-bar,
 #mobile-browser-toggle,
+#mobile-hint-btn,
 #browser-backdrop {
   display: none;
 }
@@ -380,6 +381,35 @@ body {
     display: none;
   }
 
+  #mobile-hint-btn {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 20;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 58px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: #303030;
+    color: #f4f4f4;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  }
+
+  #mobile-hint-btn:hover,
+  #mobile-hint-btn:focus-visible {
+    background: #3d3d3d;
+    outline: 2px solid rgba(255, 255, 255, 0.55);
+    outline-offset: 1px;
+  }
+
   #mobile-browser-bar {
     display: flex;
     align-items: center;
@@ -547,7 +577,8 @@ body {
 }
 
 @media (max-width: 420px) {
-  #help-widget {
+  #help-widget,
+  #mobile-hint-btn {
     top: 10px;
     right: 10px;
   }

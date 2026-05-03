@@ -31,6 +31,7 @@ let browserList;
 let sidebarToggle;
 let mobileBrowserToggle;
 let browserBackdrop;
+let mobileHintButton;
 let helpWidget;
 let helpToggle;
 let helpPanel;
@@ -896,6 +897,7 @@ export function init() {
   sidebarToggle = document.querySelector("#sidebar-toggle");
   mobileBrowserToggle = document.querySelector("#mobile-browser-toggle");
   browserBackdrop = document.querySelector("#browser-backdrop");
+  mobileHintButton = document.querySelector("#mobile-hint-btn");
   helpWidget = document.querySelector("#help-widget");
   helpToggle = document.querySelector("#help-toggle");
   helpPanel = document.querySelector("#help-panel");
@@ -916,6 +918,9 @@ export function init() {
   }
   if (browserBackdrop) {
     browserBackdrop.addEventListener("click", () => setMobileBrowserOpen(false));
+  }
+  if (mobileHintButton) {
+    mobileHintButton.addEventListener("click", showHint);
   }
   mobileBrowserMediaQuery.addEventListener("change", handleBrowserLayoutChange);
   if (helpToggle) {
