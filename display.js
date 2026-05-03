@@ -9,6 +9,7 @@ const TOTAL_PROBLEMS = problems.length;
 const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const SOLVED_STORAGE_KEY = "polgarSolvedPuzzles";
 const SIDEBAR_STORAGE_KEY = "polgarPuzzleSidebarCollapsed";
+const MOBILE_BROWSER_MEDIA = "(max-width: 880px)";
 const PROMOTION_OPTIONS = [
   { promotion: "q", role: "queen", label: "Queen" },
   { promotion: "n", role: "knight", label: "Knight" },
@@ -28,6 +29,8 @@ let nextButton;
 let problemBrowser;
 let browserList;
 let sidebarToggle;
+let mobileBrowserToggle;
+let browserBackdrop;
 let helpWidget;
 let helpToggle;
 let helpPanel;
@@ -35,6 +38,9 @@ let activeProblemButton;
 let solvedProblemIds = new Set();
 let pendingPromotion;
 let promotionChoiceElement;
+let mobileBrowserMediaQuery;
+let desktopSidebarCollapsed = false;
+let mobileBrowserOpen = false;
 
 function getUrlParameters() {
   return Object.fromEntries(new URLSearchParams(window.location.search));
@@ -159,6 +165,63 @@ function writeSidebarCollapsed(isCollapsed) {
   }
 }
 
+function isMobileBrowserLayout() {
+  if (mobileBrowserMediaQuery) {
+    return mobileBrowserMediaQuery.matches;
+  }
+
+  return window.matchMedia(MOBILE_BROWSER_MEDIA).matches;
+}
+
+function syncBrowserControls() {
+  if (!appElement || !sidebarToggle || !browserList) {
+    return;
+  }
+
+  const isMobile = isMobileBrowserLayout();
+  const isBrowserOpen = isMobile ? mobileBrowserOpen : !desktopSidebarCollapsed;
+
+  appElement.classList.toggle("mobile-browser-open", isMobile && mobileBrowserOpen);
+  browserList.hidden = !isBrowserOpen;
+
+  if (browserBackdrop) {
+    browserBackdrop.hidden = !(isMobile && mobileBrowserOpen);
+  }
+
+  if (problemBrowser) {
+    if (isMobile && !mobileBrowserOpen) {
+      problemBrowser.setAttribute("aria-hidden", "true");
+    } else {
+      problemBrowser.removeAttribute("aria-hidden");
+    }
+  }
+
+  if (mobileBrowserToggle) {
+    mobileBrowserToggle.setAttribute("aria-expanded", `${isMobile && mobileBrowserOpen}`);
+    mobileBrowserToggle.setAttribute(
+      "aria-label",
+      mobileBrowserOpen ? "Close puzzle browser" : "Open puzzle browser"
+    );
+    mobileBrowserToggle.title = mobileBrowserOpen ? "Close puzzle browser" : "Open puzzle browser";
+  }
+
+  if (isMobile) {
+    sidebarToggle.dataset.direction = "close";
+    sidebarToggle.setAttribute("aria-expanded", `${mobileBrowserOpen}`);
+    sidebarToggle.setAttribute("aria-label", "Close puzzle browser");
+    sidebarToggle.title = "Close puzzle browser";
+    return;
+  }
+
+  sidebarToggle.dataset.direction = desktopSidebarCollapsed ? "expand" : "collapse";
+  sidebarToggle.setAttribute("aria-expanded", `${!desktopSidebarCollapsed}`);
+  sidebarToggle.setAttribute(
+    "aria-label",
+    desktopSidebarCollapsed ? "Expand puzzle sidebar" : "Collapse puzzle sidebar"
+  );
+  sidebarToggle.title = desktopSidebarCollapsed ? "Expand puzzle sidebar" : "Collapse puzzle sidebar";
+}
+
 function redrawBoardAfterLayoutChange() {
   if (!board || typeof board.redrawAll !== "function") {
     return;
@@ -173,25 +236,58 @@ function setSidebarCollapsed(isCollapsed, persist = true) {
     return;
   }
 
+  desktopSidebarCollapsed = isCollapsed;
   appElement.classList.toggle("sidebar-collapsed", isCollapsed);
-  browserList.hidden = isCollapsed;
-  sidebarToggle.dataset.direction = isCollapsed ? "expand" : "collapse";
-  sidebarToggle.setAttribute("aria-expanded", `${!isCollapsed}`);
-  sidebarToggle.setAttribute(
-    "aria-label",
-    isCollapsed ? "Expand puzzle sidebar" : "Collapse puzzle sidebar"
-  );
-  sidebarToggle.title = isCollapsed ? "Expand puzzle sidebar" : "Collapse puzzle sidebar";
+  syncBrowserControls();
 
-  if (persist) {
+  if (persist && !isMobileBrowserLayout()) {
     writeSidebarCollapsed(isCollapsed);
   }
 
   redrawBoardAfterLayoutChange();
 }
 
+function setMobileBrowserOpen(isOpen, restoreFocus = true) {
+  if (!appElement) {
+    return;
+  }
+
+  mobileBrowserOpen = isOpen;
+  if (isOpen) {
+    setHelpOpen(false);
+  }
+
+  syncBrowserControls();
+
+  if (isMobileBrowserLayout()) {
+    window.requestAnimationFrame(() => {
+      if (isOpen && sidebarToggle) {
+        sidebarToggle.focus();
+      } else if (restoreFocus && mobileBrowserToggle) {
+        mobileBrowserToggle.focus();
+      }
+    });
+  }
+
+  redrawBoardAfterLayoutChange();
+}
+
 function toggleSidebar() {
+  if (isMobileBrowserLayout()) {
+    setMobileBrowserOpen(!mobileBrowserOpen);
+    return;
+  }
+
   setSidebarCollapsed(!appElement.classList.contains("sidebar-collapsed"));
+}
+
+function handleBrowserLayoutChange() {
+  if (!isMobileBrowserLayout()) {
+    mobileBrowserOpen = false;
+  }
+
+  syncBrowserControls();
+  redrawBoardAfterLayoutChange();
 }
 
 function problemButton(problemId) {
@@ -658,6 +754,14 @@ function handleKeydown(event) {
     return;
   }
 
+  if (mobileBrowserOpen && isMobileBrowserLayout()) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setMobileBrowserOpen(false);
+    }
+    return;
+  }
+
   if (!event.altKey && !event.ctrlKey && !event.metaKey && event.key.toLowerCase() === "h") {
     event.preventDefault();
     showHint();
@@ -770,6 +874,9 @@ function handleBrowserClick(event) {
   const problemId = Number(button.dataset.problemId);
   if (Number.isInteger(problemId) && problemId >= 1 && problemId <= TOTAL_PROBLEMS) {
     next(problems[problemId - 1]);
+    if (isMobileBrowserLayout()) {
+      setMobileBrowserOpen(false, false);
+    }
   }
 }
 
@@ -787,9 +894,12 @@ export function init() {
   problemBrowser = document.querySelector("#problem-browser");
   browserList = document.querySelector("#browser-list");
   sidebarToggle = document.querySelector("#sidebar-toggle");
+  mobileBrowserToggle = document.querySelector("#mobile-browser-toggle");
+  browserBackdrop = document.querySelector("#browser-backdrop");
   helpWidget = document.querySelector("#help-widget");
   helpToggle = document.querySelector("#help-toggle");
   helpPanel = document.querySelector("#help-panel");
+  mobileBrowserMediaQuery = window.matchMedia(MOBILE_BROWSER_MEDIA);
   solvedProblemIds = readSolvedProblemIds();
   board = createBoard();
   renderProblemBrowser();
@@ -801,6 +911,13 @@ export function init() {
     sidebarToggle.addEventListener("click", toggleSidebar);
     setSidebarCollapsed(readSidebarCollapsed(), false);
   }
+  if (mobileBrowserToggle) {
+    mobileBrowserToggle.addEventListener("click", () => setMobileBrowserOpen(true, false));
+  }
+  if (browserBackdrop) {
+    browserBackdrop.addEventListener("click", () => setMobileBrowserOpen(false));
+  }
+  mobileBrowserMediaQuery.addEventListener("change", handleBrowserLayoutChange);
   if (helpToggle) {
     helpToggle.addEventListener("click", toggleHelp);
     document.addEventListener("click", handleHelpDocumentClick);

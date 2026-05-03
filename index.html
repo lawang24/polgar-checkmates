@@ -27,6 +27,21 @@
         </div>
 
         <main id="app">
+            <div id="mobile-browser-bar">
+                <button
+                    id="mobile-browser-toggle"
+                    type="button"
+                    aria-label="Open puzzle browser"
+                    aria-expanded="false"
+                    aria-controls="problem-browser"
+                    title="Open puzzle browser"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <button id="browser-backdrop" type="button" aria-label="Close puzzle browser" hidden></button>
             <aside id="problem-browser" aria-label="Puzzle browser">
                 <div id="browser-title">
                     <span id="browser-title-text">Puzzles</span>
